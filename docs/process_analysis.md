@@ -13,7 +13,7 @@ a **detective scorecard** after the fact.
 
 Today the 10 data-quality rules (DQ01–DQ10) run *after* records exist and log failures
 to `dq.results`. A typical run flags ~145 bad records across ~5,000 policies and
-~139,000 premium transactions — meaning errors already reached the reporting layer
+~139,000 premium transactions - meaning errors already reached the reporting layer
 before they were found. This analysis maps each rule to the process step where the
 error is introduced and proposes a To-Be process that validates at entry.
 
@@ -39,9 +39,9 @@ flowed into the management views (`dw.vw_loss_ratio`, `dw.vw_lapse_rate`,
 
 ### Findings
 
-- **Validation is downstream/detective.** DQ01–DQ10 run against data that already
+- **Validation is downstream/detective.** DQ01-DQ10 run against data that already
   exists, not at the moment of capture.
-- **Critical defects reach reports before they are caught** — e.g. DQ03 (premium ≤ 0),
+- **Critical defects reach reports before they are caught** - e.g. DQ03 (premium ≤ 0),
   DQ06 (duplicate `policy_id`), DQ07 (broken referential integrity), DQ09
   (`claim_amount` > `sum_assured`).
 - **Management KPIs are built on unvalidated data**, so loss ratio, lapse rate and
@@ -72,18 +72,18 @@ belongs at a specific step in the process.
 Same swimlanes, but:
 
 - **DQ01–DQ08 become an automated control gateway at Capture.** A claim/policy that
-  fails is auto-returned for correction before it enters the book — errors are
+  fails is auto-returned for correction before it enters the book - errors are
   **prevented at source**, not detected later.
-- **DQ09 is enforced automatically at Assessment** — an over-claim (`claim_amount`
+- **DQ09 is enforced automatically at Assessment** - an over-claim (`claim_amount`
   > `sum_assured`) cannot be approved.
 - **DQ10 runs at Finance** as a premium-reconciliation control before payout.
-- **The scorecard (`dq.results`) becomes a monitoring dashboard**, not a safety net —
+- **The scorecard (`dq.results`) becomes a monitoring dashboard**, not a safety net -
   it now confirms quality rather than being the first place errors are found.
 
 ### Requirements (derived)
 
 - The system **shall** validate completeness, validity, uniqueness and referential
-  integrity (DQ01–DQ08) at the point of capture and block records that fail Critical
+  integrity (DQ01-DQ08) at the point of capture and block records that fail Critical
   rules.
 - The system **shall** prevent approval of any claim where `claim_amount` exceeds the
   policy `sum_assured` (DQ09).
@@ -105,6 +105,6 @@ dimensions · SQL Server (T-SQL) · Power BI.
 
 ## Related documents in this repo
 
-- [Data Quality Rules Catalogue](data_quality_rules.md) — the 10 rules as documented business rules
-- [Calculation Framework](calculation_framework.md) — metric definitions with change-control sign-off
+- [Data Quality Rules Catalogue](data_quality_rules.md) - the 10 rules as documented business rules
+- [Calculation Framework](calculation_framework.md) - metric definitions with change-control sign-off
 - [Data Dictionary](data_dictionary.md)
